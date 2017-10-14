@@ -1,6 +1,7 @@
 //CommentForm.js
 import React, { Component } from 'react';
 import style from './style';
+
 class CommentForm extends Component {
     constructor(props) {
         super(props);
@@ -23,8 +24,8 @@ class CommentForm extends Component {
         console.log(`${author} said "${text}"`);
         this.props.onCommentSubmit({ author: author, text: text });
         this.setState({ author: '', text: '' });
-        }
-        render() {
+    }
+    render() {
         return (
             <form style={ style.commentForm } onSubmit={ this.handleSubmit }>
                 <input
@@ -47,4 +48,5 @@ class CommentForm extends Component {
         )
     }
 }
+
 export default CommentForm;
