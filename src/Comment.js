@@ -63,15 +63,15 @@ class Comment extends Component {
                 { (this.state.toBeUpdated) ? (<form onSubmit={ this.handleCommentUpdate }>
                 <input type='text' placeholder='Update name...' style={ style.commentFormAuthor } value={ this.state.author } onChange={ this.handleAuthorChange } />
                 <input
-                 type='text'
-                 placeholder='Update your comment...'
-                 style= { style.commentFormText }
-                 value={ this.state.text }
-                 onChange={ this.handleTextChange } />
-                 <input
-                 type='submit'
-                 style={ style.commentFormPost }
-                 value='Update' />
+                    type='text'
+                    placeholder='Update your comment...'
+                    style= { style.commentFormText }
+                    value={ this.state.text }
+                    onChange={ this.handleTextChange } />
+                <input
+                    type='submit'
+                    style={ style.commentFormPost }
+                    value='Update' />
                  </form>
                 ) : null }
             </div>
@@ -80,5 +80,3 @@ class Comment extends Component {
 }
 
 export default Comment;
-
-// ALL based on: https://medium.com/@bryantheastronaut/react-getting-started-the-mern-stack-tutorial-feat-es6-de1a2886be50

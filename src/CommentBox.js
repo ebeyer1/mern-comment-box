@@ -49,12 +49,12 @@ class CommentBox extends Component {
     render() {
         return (
             <div style={ style.commentBox }>
-            <h2 style={ style.title }>Comments:</h2>
-            <CommentList
-            onCommentDelete={ this.handleCommentDelete }
-            onCommentUpdate={ this.handleCommentUpdate }
-            data={ this.state.data } />
-            <CommentForm onCommentSubmit={ this.handleCommentSubmit } />
+                <h2 style={ style.title }>Comments:</h2>
+                <CommentList
+                    onCommentDelete={ this.handleCommentDelete }
+                    onCommentUpdate={ this.handleCommentUpdate }
+                    data={ this.state.data } />
+                <CommentForm onCommentSubmit={ this.handleCommentSubmit } />
             </div>
         )
     }
