@@ -11,13 +11,10 @@ var Comment = require('./src/model/comments');
 var app = express();
 //now we should configure the API to use bodyParser and look for 
 //JSON data in the request body
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var router = express.Router();
-//set our port to either a predetermined port number if you have set 
-//it up, or 8080
-var port = process.env.API_PORT || 8080;
 
 //db config
 var mongooseOptions = {
@@ -69,36 +66,37 @@ router.route('/comments')
     });
 
 //Adding a route to a specific comment based on the database ID
-router.route('/comments/:comment_id')
-    //the put method gives us the chance to update our comment based on
-    //the ID passed to the route
-    .put(function(req, res) {
-        Comment.findById(req.params.comment_id, function(err, comment) {
-            if (err) res.send(err);
-            //setting the new author and text to whatever was changed. If
-            //nothing was changed we will not alter the field.
-            (req.body.author) ? comment.author = req.body.author : null;
-            (req.body.text) ? comment.text = req.body.text : null;
-            //save comment
-            comment.save(function(err) {
-                if (err) res.send(err);
-                res.json({ message: 'Comment has been updated' });
-            });
-        });
-    })
-    //delete method for removing a comment from our database
-    .delete(function(req, res) {
-        //selects the comment by its ID, then removes it.
-        Comment.remove({ _id: req.params.comment_id }, function(err, comment) {
-            if (err) res.send(err);
-            res.json({ message: 'Comment has been deleted' });
-        });
-    });
+//router.route('/comments/:comment_id')
+//    //the put method gives us the chance to update our comment based on
+//    //the ID passed to the route
+//    .put(function(req, res) {
+//        Comment.findById(req.params.comment_id, function(err, comment) {
+//            if (err) res.send(err);
+//            //setting the new author and text to whatever was changed. If
+//            //nothing was changed we will not alter the field.
+//            (req.body.author) ? comment.author = req.body.author : null;
+//            (req.body.text) ? comment.text = req.body.text : null;
+//            //save comment
+//            comment.save(function(err) {
+//                if (err) res.send(err);
+//                res.json({ message: 'Comment has been updated' });
+//            });
+//        });
+//    })
+//    //delete method for removing a comment from our database
+//    .delete(function(req, res) {
+//        //selects the comment by its ID, then removes it.
+//        Comment.remove({ _id: req.params.comment_id }, function(err, comment) {
+//            if (err) res.send(err);
+//            res.json({ message: 'Comment has been deleted' });
+//        });
+//    });
 
 //Use our router configuration when we call /api
 app.use('/api', router);
 
 //starts the server and listens for requests
+var port = process.env.PORT || 5000;
 app.listen(port, function() {
     console.log('api running on port ${port}');
 });
