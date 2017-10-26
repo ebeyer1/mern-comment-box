@@ -4,6 +4,7 @@ import Home from './Home';
 import About from './About';
 import Topics from './Topics';
 import CommentPage from './CommentPage';
+import Train from './Train';
 import registerServiceWorker from './registerServiceWorker';
 import {
     BrowserRouter as Router,
@@ -19,6 +20,7 @@ ReactDOM.render((
                 <li><Link to="/about">About</Link></li>
                 <li><Link to="/topics">Topics</Link></li>
                 <li><Link to="/comments">Comments</Link></li>
+                <li><Link to="/train">Train</Link></li>
             </ul>
     
             <hr />
@@ -27,6 +29,7 @@ ReactDOM.render((
             <Route exact path="/about" component={About} />
             <Route exact path="/topics" component={Topics} />
             <Route exact path="/comments" component={CommentPage} />
+            <Route exact path="/train" component={Train} />
         </div>
     </Router>
 ), document.getElementById('root'));
