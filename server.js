@@ -5,25 +5,23 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var path = require('path');
 var Comment = require('./src/model/comments');
 
 //and create our instances
 var app = express();
 //now we should configure the API to use bodyParser and look for 
 //JSON data in the request body
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Serve static files from the React app
-//app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.static(__dirname + '/build/'));
 
 //db config
 var mongooseOptions = {
   useMongoClient: true  
 };
-var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/beyer-labs';
+var mongoUri = process.env.MONGODB_URI || 'mongodb://test_user:password@ds117495.mlab.com:17495/mern-comment-box';
 mongoose.connect(mongoUri, mongooseOptions);
 
 // TODO - maybe we don't need this
@@ -56,7 +54,6 @@ router.route('/comments')
             // responds with a json object of our database comments.
             res.json(comments);
         });
-//        res.json({comments: [], msg: 'ze comments'});
     })
     //post new comment to the database
     .post(function(req, res) {
@@ -100,41 +97,6 @@ router.route('/comments/:comment_id')
 
 //Use our router configuration when we call /api
 app.use('/api', router);
-
-//app.get('/api', (req, res) => {
-//    res.json({ message: 'API Initialized!!!'});
-//});
-//
-//app.get('/api/comments', (req, res) => {
-//    //looks at our Comment Schema
-//    Comment.find(function(err, comments) {
-//        if (err) res.send(err);
-//        // responds with a json object of our database comments.
-//        res.json(comments);
-//    });
-//});
-//
-//app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname+'/build/index.html'));
-//});
-
-// put all API endpoints under '/api/
-//app.get('/api', (req, res) => {
-//    res.status(200).json({ message: 'API is initialized!'});
-//});
-//
-//app.get('/api/comments', (req, res) => {
-////   Comment.find(function(err, comments) {
-////        if (err) res.status(500).json(err);
-////        // responds with a json object of our database comments.
-////        res.status(200).json(comments);
-////    });
-//    res.json({comments:[]});
-//});
-
-//app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname+'/build/index.html'));
-//});
 
 //starts the server and listens for requests
 var port = process.env.PORT || 5000;
