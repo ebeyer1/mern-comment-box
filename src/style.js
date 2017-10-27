@@ -66,6 +66,12 @@ const style = {
         paddingRight:'15px',
         fontSize:'.7rem',
         color:'red'
-    }
+    },
+    userList: {
+        border:'1px solid #f1f1f1',
+        padding:'0 12px',
+        maxHeight:'70vh',
+        overflow:'scroll'
+    },
 }
 module.exports = style;

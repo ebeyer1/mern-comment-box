@@ -97,23 +97,31 @@ router.route('/comments/:comment_id')
     });
 
 // adding the /users route to our /api router
+router.route('/users')
+    .get(function(req, res) {
+        User.find(function(err, users) {
+            if (err) res.send(err);
+            // responds with a json object of our database users.
+            res.json(users);
+        });
+    })
+    .post(function(req,res) {
+        var newUser = new User();
+        newUser.counter = 0;
+
+        newUser.save(function(err) {
+            if (err) res.send(err); 
+
+            res.json(newUser);
+        });
+    });
+
 router.route('/users/:user_id')
     .get(function (req, res) {
         User.findById(req.params.user_id, function(err, user) {
-            // BAD - but for now does a get or create
-            if (err) {
-                var newUser = new User();
-                newUser._id = req.params.user_id;
-                newUser.counter = 0;
-                
-                newUser.save(function(err) {
-                    if (err) res.send(err); 
-                    
-                    res.json(newUser);
-                });
-            } else {
-                res.json(user);
-            }
+            if (err) res.send(err);
+            
+            res.json(user);
         });
     })
     // for now this updates the counter by 1. eventually should be its own route based on what is being trained
@@ -129,6 +137,12 @@ router.route('/users/:user_id')
                 res.json(user);
             })
         })
+    })
+    .delete(function(req, res) {
+        User.remove({ _id: req.params.user_id }, function(err, comment) {
+            if (err) res.send(err);
+            res.json({ message: 'Comment has been deleted' });
+        });
     });
 
 //Use our router configuration when we call /api

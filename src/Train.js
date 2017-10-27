@@ -11,7 +11,7 @@ class Train extends Component {
     }
     loadUserFromServer() {
         // userId should perhaps be passed in and used as this.props.userId?
-        // for now could add a create user button, and a select from list in Home
+        // TODO - allow clicking a user from the list in Home.js to load the Train.js page with that user id.
         axios.get('/api/users/' + this.state.userId).then(res => {
             this.setState({userId: res.data._id, counter: res.data.counter});
         });
