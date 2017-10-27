@@ -6,6 +6,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Comment = require('./src/model/comments');
+var User = require('./src/model/users');
 
 //and create our instances
 var app = express();
@@ -93,6 +94,41 @@ router.route('/comments/:comment_id')
             if (err) res.send(err);
             res.json({ message: 'Comment has been deleted' });
         });
+    });
+
+// adding the /users route to our /api router
+router.route('/users/:user_id')
+    .get(function (req, res) {
+        User.findById(req.params.user_id, function(err, user) {
+            // BAD - but for now does a get or create
+            if (err) {
+                var newUser = new User();
+                newUser._id = req.params.user_id;
+                newUser.counter = 0;
+                
+                newUser.save(function(err) {
+                    if (err) res.send(err); 
+                    
+                    res.json(newUser);
+                });
+            } else {
+                res.json(user);
+            }
+        });
+    })
+    // for now this updates the counter by 1. eventually should be its own route based on what is being trained
+    .put(function(req, res) {
+        User.findById(req.params.user_id, function(err, user) {
+            if (err) res.send(err);
+            
+            user.counter += 1;
+            
+            user.save(function(err) {
+                if (err) res.send(err);
+                
+                res.json(user);
+            })
+        })
     });
 
 //Use our router configuration when we call /api
